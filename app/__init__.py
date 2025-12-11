@@ -48,21 +48,21 @@ def after_request(response):
     header['Access-Control-Allow-Methods'] = '*'
     return response
 
-@app.errorhandler(ValidationError)
-def on_validation_error(e):
-    resp = ReturnData()
-    message = e.schema.get("messages", e.message)
-    message = message if isinstance(message, str) else message.get(e.validator, e.message)
-    if configuration.IS_PRODUCTION:
-        err = traceback.format_exc()
-        logger.error(str(err))
-    else:
-        print(str(message))
-    resp.error_message = message
-    resp.error_code = ErrorCode.validate_error
-    return resp.serialize(HTTPStatus.INTERNAL_SERVER_ERROR, error_code=ErrorCode.error)
+# @app.errorhandler(ValidationError)
+# def on_validation_error(e):
+#     resp = ReturnData()
+#     message = e.schema.get("messages", e.message)
+#     message = message if isinstance(message, str) else message.get(e.validator, e.message)
+#     if configuration.IS_PRODUCTION:
+#         err = traceback.format_exc()
+#         logger.error(str(err))
+#     else:
+#         print(str(message))
+#     resp.error_message = message
+#     resp.error_code = ErrorCode.validate_error
+#     return resp.serialize(HTTPStatus.INTERNAL_SERVER_ERROR, error_code=ErrorCode.error)
 
 
-from app.modules.auth import module as auth_module
+# from app.modules.auth import module as auth_module
 
-app.register_blueprint(auth_module)
+# app.register_blueprint(auth_module)
